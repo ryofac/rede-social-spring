@@ -9,6 +9,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +31,8 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Convenção é colocar como Long
     private String photoAttachementURL;
+
+    @NotBlank
     private String text;
     
     @CreationTimestamp
@@ -35,5 +40,9 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime editedAt;
 
+    @ManyToOne 
+    @JoinColumn(name = "user-id", updatable = false, unique = false)
+    // Devo dizer que esse é o tipo específico de coluna que referencia dados de outra tabela
+    private Profile owner;
     // Isso é uma relação N pra N, descobrir como lidar com isso no Banco
 }
