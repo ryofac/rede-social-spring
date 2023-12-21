@@ -45,10 +45,11 @@ public class Post {
     private LocalDateTime editedAt;
 
     @ManyToOne 
-    @JoinColumn(name = "user-id", updatable = false, unique = false)
+    @JoinColumn(name = "ownerId", updatable = false, unique = false)
     // Devo dizer que esse é o tipo específico de coluna que referencia dados de outra tabela
     private Profile owner;
-    // Isso é uma relação N pra N, descobrir como lidar com isso no Banco
+
+    // Isso é uma relação N pra N, precisa fazer uma "tabela de junção" para lidar com isso
     @ManyToMany 
      @JoinTable (
         name = "post_hashtag", 
