@@ -1,6 +1,8 @@
 package com.ryofac.livbook.livbook.Models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -45,4 +49,13 @@ public class Post {
     // Devo dizer que esse é o tipo específico de coluna que referencia dados de outra tabela
     private Profile owner;
     // Isso é uma relação N pra N, descobrir como lidar com isso no Banco
+    @ManyToMany 
+     @JoinTable (
+        name = "post_hashtag", 
+        joinColumns = @JoinColumn(name = "post_id"), 
+        inverseJoinColumns = @JoinColumn(name = "hashtag_id", nullable = true)
+    )
+    @Builder.Default
+    private List<Hashtag> hashtags = new ArrayList<>();
+    
 }
