@@ -43,8 +43,8 @@ public class ProfileService {
     }
 
     // A exceção Exception é capturada porque ela pode ser gerada pelo fato do usuário estar relacionado com vários posts
-    public void removeProfile(Profile toBeRemoved){
-        Profile found = findbyProfileId(toBeRemoved.getId());
+    public void removeProfile(Long id){
+        Profile found = findbyProfileId(id);
         try{
             profileRepository.deleteById(found.getId());
         } catch(Exception e){
