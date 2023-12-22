@@ -23,11 +23,6 @@ public class PostController {
     // Exemplo: Pegar todos os posts!
     // Eu recebo uma entidade do tipo Model no meu método
     // Essa entidade que vai me permitir retornar os dados para serem retornados
-    @GetMapping("/posts") // Especificando a "rota"
-    public String listPosts(Model model){
-        List<PostDTO> posts = postService.getAllPosts();
-        return "";
-    }
 
     
 }

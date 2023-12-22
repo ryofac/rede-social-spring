@@ -32,7 +32,7 @@ public class PostService {
     public Post createPost(Post toBeSaved){
         toBeSaved.setId(null); // Devo setar para nulo antes de salvar, assim garantindo que quem cuida disso é o meu próprio banco de dados
         Post saved = postRepository.save(toBeSaved);
-        hashtagRepository.saveAll(saved.getHashtags()); // Salvando as hashtags também criadas com o post
+        hashtagRepository.saveAll(saved.getHashtags()); // Salvando as hashtags também criadas com o post, ->não recomendado <- , mas vou ver no que dá :)
         return saved;
     }
 

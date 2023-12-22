@@ -36,9 +36,8 @@ public class ProfileService {
 
     public Profile updateProfile(Profile alteredProfile) {
         Profile found = findbyProfileId(alteredProfile.getId());
-        found.setEmail(alteredProfile.getEmail());
-        found.setUsername(alteredProfile.getUsername());
         found.setProfilePhotoUrl(alteredProfile.getProfilePhotoUrl());
+        found.setPassword(alteredProfile.getPassword());
         return profileRepository.save(found);
     }
 
