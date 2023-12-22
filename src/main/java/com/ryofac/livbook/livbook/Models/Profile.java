@@ -47,6 +47,15 @@ public class Profile {
     @OneToMany(mappedBy = "owner")// Forma de dizer pra persistência que esse relacionamento será 1 - n
     @Builder.Default // O default não será nulo, mas uma nova ArrayList vazia
     private List<Post> posts = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "profile_following",
+        joinColumns = @JoinColumn(name = "profile_id"),
+        inverseJoinColumns = @JoinColumn(name = "following_id")
+    )
+    @Builder.Default
+    private List<Profile> following = new ArrayList<>();
     
     
 }

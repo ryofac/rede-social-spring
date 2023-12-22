@@ -21,5 +21,7 @@ public interface IPostRepository extends JpaRepository<Post, Long> {
     //  -> ele acessa o ownerId da tabela/modelo Profile e seleciona os "objetos"
     // Buscando os posts baseados em profile id específico
     List<Post> findbyProfileId(@Param("id") Long id);
+
+    List<Post> findByOwnerId(Long id);
     
 }
