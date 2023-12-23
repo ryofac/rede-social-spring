@@ -67,7 +67,6 @@ public class Profile {
     @CreationTimestamp
     private LocalDateTime createdOn;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "owner")// Forma de dizer pra persistência que esse relacionamento será 1 - n
     @Builder.Default // O default não será nulo, mas uma nova ArrayList vazia
     private List<Post> posts = new ArrayList<>();

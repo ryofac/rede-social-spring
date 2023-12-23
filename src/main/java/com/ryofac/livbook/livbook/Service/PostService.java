@@ -2,11 +2,13 @@ package com.ryofac.livbook.livbook.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import com.ryofac.livbook.livbook.DTO.HashtagDTO;
 import com.ryofac.livbook.livbook.DTO.PostDTO;
 import com.ryofac.livbook.livbook.Exceptions.PostException.PostException;
 import com.ryofac.livbook.livbook.Exceptions.PostException.PostNotFoundException;
@@ -14,6 +16,7 @@ import com.ryofac.livbook.livbook.Models.Hashtag;
 import com.ryofac.livbook.livbook.Models.Post;
 import com.ryofac.livbook.livbook.Repository.IHashtagRepository;
 import com.ryofac.livbook.livbook.Repository.IPostRepository;
+import com.ryofac.livbook.livbook.Utils.DTOParser;
 
 import jakarta.transaction.Transactional;
 
@@ -40,7 +43,7 @@ public class PostService {
     // Se o título da hashtag já estiver no banco de dados, ela não é salva novamente
     // Aqui também atualiza- se a quantidade de vezes que a hastag foi usada
     // TODO: Criar funções auxiliares aqui
-    public Post createPost(Post toBeSaved){
+    public PostDTO createPost(Post toBeSaved){
         toBeSaved.setId(null);
         if(!toBeSaved.getHashtags().isEmpty()){
             List<Hashtag> managedHashtags = new ArrayList<>();
@@ -56,16 +59,16 @@ public class PostService {
             }
             toBeSaved.setHashtags(managedHashtags);
         }
-        return postRepository.save(toBeSaved);
+        return DTOParser.toPostDTO(postRepository.save(toBeSaved));
     }   
 
 
     @Transactional
-    public Post updatePost(Post alteredPost) {
+    public PostDTO updatePost(Post alteredPost) {
         Post found = findPostById(alteredPost.getId());
         found.setText(alteredPost.getText());
         found.setHashtags(alteredPost.getHashtags());
-        return postRepository.save(found);
+        return DTOParser.toPostDTO(postRepository.save(found));
     }
 
     public Post findPostById(Long id){
@@ -73,6 +76,10 @@ public class PostService {
          new PostNotFoundException("Post with id " + id + "not found, Tipo: " + Profile.class.getName()));
         return found;
         
+    }
+
+    public PostDTO findPostDTObyid(Long id){
+        return DTOParser.toPostDTO(findPostById(id));
     }
 
     @Transactional
@@ -87,22 +94,14 @@ public class PostService {
     }
 
 
-    public List<Post> findPostsByOwnerId(Long id){
+    public List<PostDTO> findPostsByOwnerId(Long id){
         List<Post> posts = postRepository.findByOwnerId(id);
-        return posts;
+        List<PostDTO> convert = posts.stream().map(DTOParser::toPostDTO).collect(Collectors.toList());
+        return convert;
     }
 
 
-     // Mapper para o objeto de transferência de post
-    private PostDTO toPostDTO(Post post) {
-        return PostDTO.builder()
-                      .id(post.getId())
-                      .createdAt(post.getCreatedAt())
-                      .editedAt(post.getEditedAt())
-                      .text(post.getText())
-                      .photoAttachementURL(post.getPhotoAttachementURL())
-                      .build();   
-    } 
+   
 
     
 }

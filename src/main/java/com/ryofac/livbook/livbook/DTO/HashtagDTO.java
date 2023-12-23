@@ -9,5 +9,4 @@ public class HashtagDTO {
     private Long id;
     private String title;
     private Integer timesUsed;
-    
 }

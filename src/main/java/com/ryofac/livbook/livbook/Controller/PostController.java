@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.ryofac.livbook.livbook.DTO.PostDTO;
 import com.ryofac.livbook.livbook.Exceptions.PostException.PostNotFoundException;
 import com.ryofac.livbook.livbook.Models.Post;
 import com.ryofac.livbook.livbook.Models.Post.CreatePost;
@@ -35,9 +36,9 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> findPostById(@PathVariable Long id){
+    public ResponseEntity<PostDTO> findPostById(@PathVariable Long id){
         try {
-            Post found = postService.findPostById(id);
+            PostDTO found = postService.findPostDTObyid(id);
             return ResponseEntity.ok(found);
         } catch (PostNotFoundException e) {
             return ResponseEntity.notFound().build();
@@ -45,8 +46,8 @@ public class PostController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<List<Post>> findByOwnerId(@PathVariable Long id) {
-        List<Post> allPosts = postService.findPostsByOwnerId(id);
+    public ResponseEntity<List<PostDTO>> findByOwnerId(@PathVariable Long id) {
+        List<PostDTO> allPosts = postService.findPostsByOwnerId(id);
         return ResponseEntity.ok(allPosts);
     }
 

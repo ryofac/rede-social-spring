@@ -3,7 +3,6 @@ package com.ryofac.livbook.livbook.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.swing.text.html.parser.Entity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +13,8 @@ import com.ryofac.livbook.livbook.Exceptions.ProfileException.ProfileNotFoundExc
 import com.ryofac.livbook.livbook.Models.Profile;
 import com.ryofac.livbook.livbook.Repository.IPostRepository;
 import com.ryofac.livbook.livbook.Repository.IProfileRepository;
+import com.ryofac.livbook.livbook.Utils.DTOParser;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -24,9 +22,6 @@ public class ProfileService {
     private IPostRepository postRepository;
     private IProfileRepository profileRepository;
    
-
-
-
     @Autowired
     public ProfileService(IPostRepository postRepository, IProfileRepository profileRepository) {
         this.postRepository = postRepository;
@@ -34,17 +29,17 @@ public class ProfileService {
     }
 
     @Transactional
-    public Profile createProfile(Profile profile) {
+    public ProfileDTO createProfile(Profile profile) {
         profile.setId(null);
         postRepository.saveAll(profile.getPosts());
-        return profileRepository.save(profile);
+        return DTOParser.toProfileDTO(profileRepository.save(profile));
     }
 
-    public Profile updateProfile(Profile alteredProfile) {
+    public ProfileDTO updateProfile(Profile alteredProfile) {
         Profile found = findbyProfileId(alteredProfile.getId());
         found.setProfilePhotoUrl(alteredProfile.getProfilePhotoUrl());
         found.setPassword(alteredProfile.getPassword());
-        return profileRepository.save(found);
+        return DTOParser.toProfileDTO(profileRepository.save(found));
     }
 
     // A exceção Exception é capturada porque ela pode ser gerada pelo fato do usuário estar relacionado com vários posts
@@ -59,7 +54,7 @@ public class ProfileService {
     }
 
     public List<ProfileDTO> getAllProfiles() {
-        List<ProfileDTO> profiles = profileRepository.findAll().stream().map(prof -> toProfileDTO(prof)).collect(Collectors.toList());
+        List<ProfileDTO> profiles = profileRepository.findAll().stream().map(DTOParser::toProfileDTO).collect(Collectors.toList());
         return profiles;
     
     }
@@ -69,17 +64,10 @@ public class ProfileService {
         return found;
     }
 
-   
-
-    // Mapper para o objeto de transferência de perfil
-    public ProfileDTO toProfileDTO(Profile profile){
-        return ProfileDTO.builder()
-                        .id(profile.getId())
-                        .email(profile.getEmail())
-                        .username(profile.getUsername()) 
-                        .profilePhotoUrl(profile.getProfilePhotoUrl())
-                        .build();
+    public ProfileDTO findbyProfileDTOId(Long id){
+        return DTOParser.toProfileDTO(findbyProfileId(id));
     }
+
 
     
 }

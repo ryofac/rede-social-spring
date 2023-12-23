@@ -26,6 +26,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/profile") // As rotas que começam com /profile vão ser tratadas por esse controller
 @Validated // Indica que será efetuada uma validação de dados
+// TODO : Adcionar e tratar mais tipos de Exceções:
 public class ProfileController {
     private ProfileService profileService;
 
