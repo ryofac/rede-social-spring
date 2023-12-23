@@ -3,6 +3,8 @@ package com.ryofac.livbook.livbook.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.swing.text.html.parser.Entity;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +15,16 @@ import com.ryofac.livbook.livbook.Models.Profile;
 import com.ryofac.livbook.livbook.Repository.IPostRepository;
 import com.ryofac.livbook.livbook.Repository.IProfileRepository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @Service
 public class ProfileService {
     private IPostRepository postRepository;
     private IProfileRepository profileRepository;
+   
+
 
 
     @Autowired
@@ -43,11 +49,12 @@ public class ProfileService {
 
     // A exceção Exception é capturada porque ela pode ser gerada pelo fato do usuário estar relacionado com vários posts
     public void removeProfile(Long id){
-        Profile found = findbyProfileId(id);
         try{
+            Profile found = findbyProfileId(id);
+            postRepository.deleteAll(found.getPosts());
             profileRepository.deleteById(found.getId());
         } catch(Exception e){
-            throw new ProfileException("Profile can't be deleted:" + e.getMessage());
+            throw new ProfileException("Profile can't be deleted: " + e.getMessage());
         }
     }
 

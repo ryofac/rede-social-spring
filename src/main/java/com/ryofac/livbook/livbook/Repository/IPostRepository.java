@@ -2,7 +2,9 @@ package com.ryofac.livbook.livbook.Repository;
 
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -22,6 +24,9 @@ public interface IPostRepository extends JpaRepository<Post, Long> {
     // Buscando os posts baseados em profile id específico
     List<Post> findbyProfileId(@Param("id") Long id);
 
+    @Query(value = "DELETE FROM post_hashtag WHERE post_id = :postId", nativeQuery = true)
+    void deletePostHashtags(@Param("postId") Long postId);
+    
     List<Post> findByOwnerId(Long id);
     
 }

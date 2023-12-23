@@ -39,7 +39,7 @@ public class ProfileController {
     // Também deve-se colocar como o PATHVARIABLE para indicar que ele é um parâmetro
     @GetMapping("/{id}")
     public ResponseEntity<Profile> findById(@PathVariable Long id){
-         Profile found;
+        Profile found;
         try {
            found = profileService.findbyProfileId(id);
             return ResponseEntity.ok(found);

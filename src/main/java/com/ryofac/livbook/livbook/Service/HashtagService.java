@@ -1,11 +1,13 @@
 package com.ryofac.livbook.livbook.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ryofac.livbook.livbook.Exceptions.PostException.HashtagNotFoundException;
 import com.ryofac.livbook.livbook.Models.Hashtag;
 import com.ryofac.livbook.livbook.Repository.IHashtagRepository;
 
+@Service
 public class HashtagService {
     public IHashtagRepository hashtagRepository;
 
@@ -35,6 +37,10 @@ public class HashtagService {
             throw new HashtagNotFoundException("Hashtag can't be deleted:" + e.getMessage());
         }
 
+    }
+
+    public Hashtag foundHashtagByTitle(String title){
+        return hashtagRepository.findByTitle(title).orElseThrow(() -> new HashtagNotFoundException("Hashtag " + title + "Not found"));
     }
 
 }

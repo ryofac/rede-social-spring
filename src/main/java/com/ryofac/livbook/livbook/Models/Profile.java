@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -69,5 +71,12 @@ public class Profile {
     @OneToMany(mappedBy = "owner")// Forma de dizer pra persistência que esse relacionamento será 1 - n
     @Builder.Default // O default não será nulo, mas uma nova ArrayList vazia
     private List<Post> posts = new ArrayList<>();
+
+    @PreRemove
+    private void removePosts() {
+        for (Post post : posts) {
+            post.setOwner(null);
+        }
+    }
     
 }
