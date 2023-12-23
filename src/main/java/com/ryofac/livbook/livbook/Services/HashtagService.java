@@ -1,11 +1,11 @@
-package com.ryofac.livbook.livbook.Service;
+package com.ryofac.livbook.livbook.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ryofac.livbook.livbook.Exceptions.PostException.HashtagNotFoundException;
 import com.ryofac.livbook.livbook.Models.Hashtag;
-import com.ryofac.livbook.livbook.Repository.IHashtagRepository;
+import com.ryofac.livbook.livbook.Repositories.IHashtagRepository;
 
 @Service
 public class HashtagService {

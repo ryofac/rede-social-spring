@@ -1,4 +1,4 @@
-package com.ryofac.livbook.livbook.Controller;
+package com.ryofac.livbook.livbook.Controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -16,14 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.ryofac.livbook.livbook.DTO.PostDTO;
+import com.ryofac.livbook.livbook.DTOs.PostDTO;
 import com.ryofac.livbook.livbook.Exceptions.PostException.PostNotFoundException;
 import com.ryofac.livbook.livbook.Models.Post;
 import com.ryofac.livbook.livbook.Models.Post.CreatePost;
 import com.ryofac.livbook.livbook.Models.Post.UpdatePost;
-import com.ryofac.livbook.livbook.Service.PostService;
+import com.ryofac.livbook.livbook.Services.PostService;
 
 import jakarta.validation.Valid;
+
+// TODO : Adcionar e tratar mais tipos de Exceções
 
 @RequestMapping("/posts")
 @RestController

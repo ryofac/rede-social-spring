@@ -1,4 +1,4 @@
-package com.ryofac.livbook.livbook.Controller;
+package com.ryofac.livbook.livbook.Controllers;
 
 import java.net.URI;
 
@@ -19,7 +19,7 @@ import com.ryofac.livbook.livbook.Exceptions.ProfileException.ProfileNotFoundExc
 import com.ryofac.livbook.livbook.Models.Profile;
 import com.ryofac.livbook.livbook.Models.Profile.CreateProfile;
 import com.ryofac.livbook.livbook.Models.Profile.UpdateProfile;
-import com.ryofac.livbook.livbook.Service.ProfileService;
+import com.ryofac.livbook.livbook.Services.ProfileService;
 
 import jakarta.validation.Valid;
 

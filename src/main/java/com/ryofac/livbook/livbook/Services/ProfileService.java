@@ -1,4 +1,4 @@
-package com.ryofac.livbook.livbook.Service;
+package com.ryofac.livbook.livbook.Services;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,12 +7,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ryofac.livbook.livbook.DTO.ProfileDTO;
+import com.ryofac.livbook.livbook.DTOs.ProfileDTO;
 import com.ryofac.livbook.livbook.Exceptions.ProfileException.ProfileException;
 import com.ryofac.livbook.livbook.Exceptions.ProfileException.ProfileNotFoundException;
 import com.ryofac.livbook.livbook.Models.Profile;
-import com.ryofac.livbook.livbook.Repository.IPostRepository;
-import com.ryofac.livbook.livbook.Repository.IProfileRepository;
+import com.ryofac.livbook.livbook.Repositories.IPostRepository;
+import com.ryofac.livbook.livbook.Repositories.IProfileRepository;
 import com.ryofac.livbook.livbook.Utils.DTOParser;
 
 import jakarta.transaction.Transactional;

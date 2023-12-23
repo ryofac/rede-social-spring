@@ -1,4 +1,4 @@
-package com.ryofac.livbook.livbook.Service;
+package com.ryofac.livbook.livbook.Services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import com.ryofac.livbook.livbook.DTO.HashtagDTO;
-import com.ryofac.livbook.livbook.DTO.PostDTO;
+import com.ryofac.livbook.livbook.DTOs.HashtagDTO;
+import com.ryofac.livbook.livbook.DTOs.PostDTO;
 import com.ryofac.livbook.livbook.Exceptions.PostException.PostException;
 import com.ryofac.livbook.livbook.Exceptions.PostException.PostNotFoundException;
 import com.ryofac.livbook.livbook.Models.Hashtag;
 import com.ryofac.livbook.livbook.Models.Post;
-import com.ryofac.livbook.livbook.Repository.IHashtagRepository;
-import com.ryofac.livbook.livbook.Repository.IPostRepository;
+import com.ryofac.livbook.livbook.Repositories.IHashtagRepository;
+import com.ryofac.livbook.livbook.Repositories.IPostRepository;
 import com.ryofac.livbook.livbook.Utils.DTOParser;
 
 import jakarta.transaction.Transactional;

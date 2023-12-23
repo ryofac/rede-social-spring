@@ -1,4 +1,4 @@
-package com.ryofac.livbook.livbook.DTO;
+package com.ryofac.livbook.livbook.DTOs;
 
 import java.util.List;
 

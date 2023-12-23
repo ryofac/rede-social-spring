@@ -1,4 +1,4 @@
-package com.ryofac.livbook.livbook.Repository;
+package com.ryofac.livbook.livbook.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

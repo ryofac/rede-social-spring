@@ -2,9 +2,9 @@ package com.ryofac.livbook.livbook.Utils;
 
 import java.util.stream.Collectors;
 
-import com.ryofac.livbook.livbook.DTO.HashtagDTO;
-import com.ryofac.livbook.livbook.DTO.PostDTO;
-import com.ryofac.livbook.livbook.DTO.ProfileDTO;
+import com.ryofac.livbook.livbook.DTOs.HashtagDTO;
+import com.ryofac.livbook.livbook.DTOs.PostDTO;
+import com.ryofac.livbook.livbook.DTOs.ProfileDTO;
 import com.ryofac.livbook.livbook.Models.Hashtag;
 import com.ryofac.livbook.livbook.Models.Post;
 import com.ryofac.livbook.livbook.Models.Profile;
