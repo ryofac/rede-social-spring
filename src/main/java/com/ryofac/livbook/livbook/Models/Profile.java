@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -25,10 +23,6 @@ import lombok.NoArgsConstructor;
 @Builder
 
 @Entity
-// TODO: Sobrescrever o método equals da classe para fazer com que ele seja igual pelo nome, email e senha
-// TODO: DTO nele
-// TODO: Implementar o hash da senha
-// TODO (talvez não): Implementar o id como um UID
 public class Profile {
 
     // Criação de interfaces para o uso da validação do spring 
