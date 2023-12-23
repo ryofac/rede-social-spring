@@ -9,8 +9,16 @@ import com.ryofac.livbook.livbook.Models.Hashtag;
 import com.ryofac.livbook.livbook.Models.Post;
 import com.ryofac.livbook.livbook.Models.Profile;
 
+/**
+ * Classe que contém funções acessórias para a transformação de Entidades em DTO's
+ */
 public class DTOParser {
-      // Mapper para o objeto de transferência de post
+    /**
+     * Converte Entidades Post em PostDTO
+     * 
+     * @param post uma instância da entidade Post
+     * @return um Objeto de transferência de Post
+     */
     static public PostDTO toPostDTO(Post post) {
         return PostDTO.builder()
                       .id(post.getId())
@@ -23,6 +31,12 @@ public class DTOParser {
                       .build();   
     }
 
+    /**
+     * Converte Entidades Hashtag em HashtagDTO
+     * 
+     * @param hashtag uma instância da entidade Hashtag
+     * @return um Objeto de transferência de Hashtag
+     */
     static public HashtagDTO toHashtagDTO(Hashtag hashtag) {
         return HashtagDTO.builder().title(hashtag.getTitle())
                                    .id(hashtag.getId())
@@ -30,6 +44,12 @@ public class DTOParser {
                                    .build();
     }
     
+    /**
+     * Converte Entidades Profile em ProfileDTO
+     * 
+     * @param prof uma instância da entidade Profile
+     * @return um Objeto de transferência de Profile
+     */
     static public ProfileDTO toProfileDTO(Profile prof){
         return ProfileDTO.builder()
                         .id(prof.getId())
@@ -37,7 +57,6 @@ public class DTOParser {
                         .username(prof.getUsername()) 
                         .profilePhotoUrl(prof.getProfilePhotoUrl())
                         .build();
-    }
 
-    
+    }
 }
