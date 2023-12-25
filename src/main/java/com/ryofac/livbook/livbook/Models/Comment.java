@@ -1,44 +1,48 @@
 package com.ryofac.livbook.livbook.Models;
 
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// TODO: Adcionar relacionamento entre hashtags e posts
+@Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+public class Comment {
 
-@Entity
-public class Hashtag {
+    public interface CreateComment {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String title;
-    private Integer timesUsed;
+    @NotEmpty(groups = {CreateComment.class})
+    @NotNull
+    private String content;
+
+    @ManyToOne
+    @NotEmpty(groups = {CreateComment.class})
+    @NotNull
+    private Profile owner;
+
+    @ManyToOne
+    private Post post;
 
     @CreationTimestamp
-    private LocalDateTime firstUsedAt;
-
-    @ManyToMany(mappedBy = "hashtags")
-    @Builder.Default
-    private List<Post> posts = new ArrayList<>();
-   
+    private LocalDateTime createdAt;
 }

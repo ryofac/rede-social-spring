@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -65,11 +63,20 @@ public class Profile {
     @Builder.Default // O default não será nulo, mas uma nova ArrayList vazia
     private List<Post> posts = new ArrayList<>();
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "profile_followers", joinColumns = @JoinColumn(name = "follower_id"), inverseJoinColumns = @JoinColumn(name = "followed_id"))
+    @Builder.Default
+    private List<Profile> followers = new ArrayList<>();
+
     @PreRemove
     private void removePosts() {
         for (Post post : posts) {
             post.setOwner(null);
         }
     }
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
+    @Builder.Default
+    private List<Comment> comments = new ArrayList<>();
     
 }

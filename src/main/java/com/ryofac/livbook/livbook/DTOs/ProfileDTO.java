@@ -1,4 +1,3 @@
-package com.ryofac.livbook.livbook.DTOs;
 
 import java.util.List;
 
@@ -12,5 +11,5 @@ public class ProfileDTO {
     private String username;
     private String email;
     private String profilePhotoUrl;
-    private List<PostDTO> posts;
+    private List<PostDetailDTO> posts;
 }
