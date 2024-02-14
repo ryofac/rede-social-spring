@@ -38,12 +38,8 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PostDTO> findPostById(@PathVariable Long id){
-        try {
-            PostDTO found = postService.findPostDTObyid(id);
-            return ResponseEntity.ok(found);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        PostDTO found = postService.findPostDTObyid(id);
+        return ResponseEntity.ok(found);
     }
 
     @GetMapping("/user/{id}")

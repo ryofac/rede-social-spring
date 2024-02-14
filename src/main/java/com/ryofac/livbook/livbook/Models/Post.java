@@ -9,6 +9,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -69,6 +72,8 @@ public class Post {
     @JoinColumn(name = "ownerId", updatable = false, unique = false, nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     // Devo dizer que esse é o tipo específico de coluna que referencia dados de outra tabela
+
+    @JsonIgnore
     private Profile owner;
 
     @PreRemove

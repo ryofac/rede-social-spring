@@ -7,6 +7,8 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,6 +43,7 @@ public class Hashtag {
 
     @ManyToMany(mappedBy = "hashtags")
     @Builder.Default
+    @JsonIgnore
     private List<Post> posts = new ArrayList<>();
    
 }

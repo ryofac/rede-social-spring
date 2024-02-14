@@ -17,7 +17,7 @@ import com.ryofac.livbook.livbook.Models.Post;
 import com.ryofac.livbook.livbook.Repositories.IHashtagRepository;
 import com.ryofac.livbook.livbook.Repositories.IPostRepository;
 import com.ryofac.livbook.livbook.Services.exceptions.ObjectNotFoundException;
-import com.ryofac.livbook.livbook.Utils.DTOParser;
+import com.ryofac.livbook.livbook.Utils.DTOMapper;
 
 import jakarta.transaction.Transactional;
 
@@ -60,7 +60,7 @@ public class PostService {
             }
             toBeSaved.setHashtags(managedHashtags);
         }
-        return DTOParser.toPostDTO(postRepository.save(toBeSaved));
+        return DTOMapper.toPostDTO(postRepository.save(toBeSaved));
     }   
 
 
@@ -69,7 +69,7 @@ public class PostService {
         Post found = findPostById(alteredPost.getId());
         found.setText(alteredPost.getText());
         found.setHashtags(alteredPost.getHashtags());
-        return DTOParser.toPostDTO(postRepository.save(found));
+        return DTOMapper.toPostDTO(postRepository.save(found));
     }
 
     public Post findPostById(@NonNull Long id){
@@ -80,7 +80,7 @@ public class PostService {
     }
 
     public PostDTO findPostDTObyid(@NonNull Long id){
-        return DTOParser.toPostDTO(findPostById(id));
+        return DTOMapper.toPostDTO(findPostById(id));
     }
 
     @Transactional
@@ -92,7 +92,7 @@ public class PostService {
 
     public List<PostDTO> findPostsByOwnerId(Long id){
         List<Post> posts = postRepository.findByOwnerId(id);
-        List<PostDTO> convert = posts.stream().map(DTOParser::toPostDTO).collect(Collectors.toList());
+        List<PostDTO> convert = posts.stream().map(DTOMapper::toPostDTO).collect(Collectors.toList());
         return convert;
     }
 

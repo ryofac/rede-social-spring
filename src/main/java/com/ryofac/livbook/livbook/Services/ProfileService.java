@@ -13,7 +13,7 @@ import com.ryofac.livbook.livbook.Models.Profile;
 import com.ryofac.livbook.livbook.Repositories.IPostRepository;
 import com.ryofac.livbook.livbook.Repositories.IProfileRepository;
 import com.ryofac.livbook.livbook.Services.exceptions.ObjectNotFoundException;
-import com.ryofac.livbook.livbook.Utils.DTOParser;
+import com.ryofac.livbook.livbook.Utils.DTOMapper;
 
 import jakarta.transaction.Transactional;
 
@@ -32,14 +32,14 @@ public class ProfileService {
     public ProfileDTO createProfile(Profile profile) {
         profile.setId(null);
         postRepository.saveAll(profile.getPosts());
-        return DTOParser.toProfileDTO(profileRepository.save(profile));
+        return DTOMapper.toProfileDTO(profileRepository.save(profile));
     }
 
     public ProfileDTO updateProfile(Profile alteredProfile) {
         Profile found = findbyProfileId(alteredProfile.getId());
         found.setProfilePhotoUrl(alteredProfile.getProfilePhotoUrl());
         found.setPassword(alteredProfile.getPassword());
-        return DTOParser.toProfileDTO(profileRepository.save(found));
+        return DTOMapper.toProfileDTO(profileRepository.save(found));
     }
 
     // A exceção Exception é capturada porque ela pode ser gerada pelo fato do usuário estar relacionado com vários posts
@@ -50,7 +50,7 @@ public class ProfileService {
     }
 
     public List<ProfileDTO> getAllProfiles() {
-        List<ProfileDTO> profiles = profileRepository.findAll().stream().map(DTOParser::toProfileDTO).collect(Collectors.toList());
+        List<ProfileDTO> profiles = profileRepository.findAll().stream().map(DTOMapper::toProfileDTO).collect(Collectors.toList());
         return profiles;
     
     }
@@ -61,7 +61,7 @@ public class ProfileService {
     }
 
     public ProfileDTO findbyProfileDTOId(Long id){
-        return DTOParser.toProfileDTO(findbyProfileId(id));
+        return DTOMapper.toProfileDTO(findbyProfileId(id));
     }
 
 

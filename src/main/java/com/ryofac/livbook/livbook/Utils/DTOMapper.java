@@ -12,7 +12,7 @@ import com.ryofac.livbook.livbook.Models.Profile;
 /**
  * Classe que contém funções acessórias para a transformação de Entidades em DTO's
  */
-public class DTOParser {
+public class DTOMapper {
     /**
      * Converte Entidades Post em PostDTO
      * 
@@ -26,7 +26,7 @@ public class DTOParser {
                       .editedAt(post.getEditedAt())
                       .text(post.getText())
                       .photoAttachementURL(post.getPhotoAttachementURL())
-                      .hashtags(post.getHashtags().stream().map(DTOParser::toHashtagDTO).collect(Collectors.toList()))
+                      .hashtags(post.getHashtags().stream().map(DTOMapper::toHashtagDTO).collect(Collectors.toList()))
                       .build();   
     }
 
