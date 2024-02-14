@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ryofac.livbook.livbook.DTOs.ProfileDTO;
-import com.ryofac.livbook.livbook.Exceptions.ProfileException.ProfileException;
-import com.ryofac.livbook.livbook.Exceptions.ProfileException.ProfileNotFoundException;
 import com.ryofac.livbook.livbook.Models.Profile;
 import com.ryofac.livbook.livbook.Repositories.IPostRepository;
 import com.ryofac.livbook.livbook.Repositories.IProfileRepository;
@@ -49,7 +47,7 @@ public class ProfileService {
             postRepository.deleteAll(found.getPosts());
             profileRepository.deleteById(found.getId());
         } catch(Exception e){
-            throw new ProfileException("Profile can't be deleted: " + e.getMessage());
+            throw new RuntimeException("Profile can't be deleted: " + e.getMessage());
         }
     }
 
@@ -60,7 +58,7 @@ public class ProfileService {
     }
 
     public Profile findbyProfileId(Long id) {
-        Profile found = profileRepository.findById(id).orElseThrow(() -> new ProfileNotFoundException("Profile with id " + id + "not found, Tipo: " + Profile.class.getName()));
+        Profile found = profileRepository.findById(id).orElseThrow(() -> new RuntimeException("Profile with id " + id + "not found, Tipo: " + Profile.class.getName()));
         return found;
     }
 

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ryofac.livbook.livbook.DTOs.PostDTO;
-import com.ryofac.livbook.livbook.Exceptions.PostException.PostNotFoundException;
 import com.ryofac.livbook.livbook.Models.Post;
 import com.ryofac.livbook.livbook.Models.Post.CreatePost;
 import com.ryofac.livbook.livbook.Models.Post.UpdatePost;
@@ -42,7 +41,7 @@ public class PostController {
         try {
             PostDTO found = postService.findPostDTObyid(id);
             return ResponseEntity.ok(found);
-        } catch (PostNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -69,7 +68,7 @@ public class PostController {
             newPost.setId(id);
             postService.updatePost(newPost);
             return ResponseEntity.noContent().build();
-        } catch(PostNotFoundException e) {
+        } catch(Exception e) {
             return ResponseEntity.notFound().build();
         }
     }

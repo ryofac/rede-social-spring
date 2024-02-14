@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.ryofac.livbook.livbook.Exceptions.ProfileException.ProfileNotFoundException;
 import com.ryofac.livbook.livbook.Models.Profile;
 import com.ryofac.livbook.livbook.Models.Profile.CreateProfile;
 import com.ryofac.livbook.livbook.Models.Profile.UpdateProfile;
@@ -44,8 +43,6 @@ public class ProfileController {
         try {
            found = profileService.findbyProfileId(id);
             return ResponseEntity.ok(found);
-        } catch(ProfileNotFoundException e) {
-            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

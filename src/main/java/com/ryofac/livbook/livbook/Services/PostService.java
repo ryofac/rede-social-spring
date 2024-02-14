@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ryofac.livbook.livbook.DTOs.HashtagDTO;
 import com.ryofac.livbook.livbook.DTOs.PostDTO;
-import com.ryofac.livbook.livbook.Exceptions.PostException.PostException;
-import com.ryofac.livbook.livbook.Exceptions.PostException.PostNotFoundException;
+
 import com.ryofac.livbook.livbook.Models.Hashtag;
 import com.ryofac.livbook.livbook.Models.Post;
 import com.ryofac.livbook.livbook.Repositories.IHashtagRepository;
@@ -73,7 +72,7 @@ public class PostService {
 
     public Post findPostById(Long id){
         Post found = postRepository.findById(id).orElseThrow(() ->
-         new PostNotFoundException("Post with id " + id + "not found, Tipo: " + Profile.class.getName()));
+         new RuntimeException("Post with id " + id + "not found, Tipo: " + Profile.class.getName()));
         return found;
         
     }

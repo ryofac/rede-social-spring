@@ -1,6 +1,4 @@
-
-import java.util.List;
-
+package com.ryofac.livbook.livbook.DTOs;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,5 +9,4 @@ public class ProfileDTO {
     private String username;
     private String email;
     private String profilePhotoUrl;
-    private List<PostDetailDTO> posts;
 }
