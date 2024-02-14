@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.ryofac.livbook.livbook.DTOs.HashtagDTO;
@@ -15,6 +16,7 @@ import com.ryofac.livbook.livbook.Models.Hashtag;
 import com.ryofac.livbook.livbook.Models.Post;
 import com.ryofac.livbook.livbook.Repositories.IHashtagRepository;
 import com.ryofac.livbook.livbook.Repositories.IPostRepository;
+import com.ryofac.livbook.livbook.Services.exceptions.ObjectNotFoundException;
 import com.ryofac.livbook.livbook.Utils.DTOParser;
 
 import jakarta.transaction.Transactional;
@@ -70,26 +72,21 @@ public class PostService {
         return DTOParser.toPostDTO(postRepository.save(found));
     }
 
-    public Post findPostById(Long id){
+    public Post findPostById(@NonNull Long id){
         Post found = postRepository.findById(id).orElseThrow(() ->
-         new RuntimeException("Post with id " + id + "not found, Tipo: " + Profile.class.getName()));
+         new ObjectNotFoundException("Post with id " + id + "not found, Tipo: " + Profile.class.getName()));
         return found;
         
     }
 
-    public PostDTO findPostDTObyid(Long id){
+    public PostDTO findPostDTObyid(@NonNull Long id){
         return DTOParser.toPostDTO(findPostById(id));
     }
 
     @Transactional
-    public void deletePost(Long id){
-        try {
-            findPostById(id);
-            postRepository.deleteById(id);
-        } catch(Exception e){
-            throw new RuntimeException("Post can't be deleted:" + e.getMessage());
-        }
-       
+    public void deletePost(@NonNull Long id){
+        findPostById(id);
+        postRepository.deleteById(id);
     }
 
 

@@ -22,7 +22,6 @@ public class DTOParser {
     static public PostDTO toPostDTO(Post post) {
         return PostDTO.builder()
                       .id(post.getId())
-                      .owner(toProfileDTO(post.getOwner()))
                       .createdAt(post.getCreatedAt())
                       .editedAt(post.getEditedAt())
                       .text(post.getText())

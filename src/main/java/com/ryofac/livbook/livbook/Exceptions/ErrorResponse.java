@@ -1,4 +1,4 @@
-package com.ryofac.livbook.livbook.Services.exceptions;
+package com.ryofac.livbook.livbook.Exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.ryofac.livbook.livbook.Services.exceptions;
+package com.ryofac.livbook.livbook.Exceptions;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.ryofac.livbook.livbook.Services.exceptions.ObjectNotFoundException;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -97,6 +99,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
         log.error("Failed to validate element ", ex);
         return buildErrorResponse(ex, ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY, request);
+    }
+
+    @ExceptionHandler(ObjectNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleObjectNotFoundException(ObjectNotFoundException ex, WebRequest request){
+        log.error("Entity not found", ex);
+        return buildErrorResponse(ex, ex.getMessage(), HttpStatus.NOT_FOUND, request);
     }
 
 

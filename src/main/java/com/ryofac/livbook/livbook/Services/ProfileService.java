@@ -5,12 +5,14 @@ import java.util.stream.Collectors;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.ryofac.livbook.livbook.DTOs.ProfileDTO;
 import com.ryofac.livbook.livbook.Models.Profile;
 import com.ryofac.livbook.livbook.Repositories.IPostRepository;
 import com.ryofac.livbook.livbook.Repositories.IProfileRepository;
+import com.ryofac.livbook.livbook.Services.exceptions.ObjectNotFoundException;
 import com.ryofac.livbook.livbook.Utils.DTOParser;
 
 import jakarta.transaction.Transactional;
@@ -41,14 +43,10 @@ public class ProfileService {
     }
 
     // A exceção Exception é capturada porque ela pode ser gerada pelo fato do usuário estar relacionado com vários posts
-    public void removeProfile(Long id){
-        try{
-            Profile found = findbyProfileId(id);
-            postRepository.deleteAll(found.getPosts());
-            profileRepository.deleteById(found.getId());
-        } catch(Exception e){
-            throw new RuntimeException("Profile can't be deleted: " + e.getMessage());
-        }
+    public void removeProfile(@NonNull Long id){
+        Profile found = findbyProfileId(id);
+        postRepository.deleteAll(found.getPosts());
+        profileRepository.deleteById(found.getId());
     }
 
     public List<ProfileDTO> getAllProfiles() {
@@ -57,8 +55,8 @@ public class ProfileService {
     
     }
 
-    public Profile findbyProfileId(Long id) {
-        Profile found = profileRepository.findById(id).orElseThrow(() -> new RuntimeException("Profile with id " + id + "not found, Tipo: " + Profile.class.getName()));
+    public Profile findbyProfileId(@NonNull Long id) {
+        Profile found = profileRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Profile with id " + id + "not found, Tipo: " + Profile.class.getName()));
         return found;
     }
 
