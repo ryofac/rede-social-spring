@@ -4,6 +4,7 @@ package com.ryofac.livbook.livbook.Models;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +34,7 @@ public class Comment {
 
     @NotEmpty(groups = {CreateComment.class})
     @NotNull
+    @Length(max = 100)
     private String content;
 
     @ManyToOne

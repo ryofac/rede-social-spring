@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Length;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -55,6 +55,7 @@ public class Post {
 
     @NotEmpty(groups = {CreatePost.class, UpdatePost.class})
     @NotNull(groups = {CreatePost.class, UpdatePost.class})
+    @org.hibernate.validator.constraints.Length(max=100)
     private String text;
     
     @CreationTimestamp

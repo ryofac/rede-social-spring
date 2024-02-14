@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,6 +32,7 @@ public class Hashtag {
     private Long id;
 
     @Column(unique = true, nullable = false)
+    @Length(min=4, max=20)
     private String title;
     private Integer timesUsed;
 

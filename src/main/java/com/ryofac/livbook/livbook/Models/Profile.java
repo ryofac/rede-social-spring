@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -37,9 +38,10 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", length = 100, unique = true, nullable = false)
+    @Column(name = "username", unique = true, nullable = false)
     @NotNull(groups = CreateProfile.class)
     @NotEmpty(groups = CreateProfile.class)
+    @Length(min=8, max=20)
     private String username;
 
     @Column(name = "email", unique = true, nullable = false)
@@ -49,6 +51,7 @@ public class Profile {
     @Column(name = "password", nullable = false)
     @NotNull(groups = {CreateProfile.class, UpdateProfile.class })
     @NotEmpty(groups = {CreateProfile.class, UpdateProfile.class} )
+    @Length(min=8, max=30)
     private String password;
 
     @Column(name= "photoUrl", nullable = true)
