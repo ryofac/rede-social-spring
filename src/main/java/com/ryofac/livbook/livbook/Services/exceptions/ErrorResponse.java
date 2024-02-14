@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -11,11 +13,14 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
+
+// Isso indica para o parser do Json que ele deve incluir SOMENTE os valores não nulos
+@JsonInclude(JsonInclude.Include.NON_NULL)
+
 public class ErrorResponse {
     private final int status;
     private final String message;
-    private long timestamp;
-
+    
     /* O spring ainda contém o trace, porém não é bom retorná-lo na fase de finalização do projeto,
     pode levar a ataques de injeção de código */
     private String stackTrace;
