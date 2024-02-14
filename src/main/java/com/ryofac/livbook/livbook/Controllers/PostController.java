@@ -64,13 +64,9 @@ public class PostController {
     @PutMapping("/{id}")
     @Validated(UpdatePost.class)
     public ResponseEntity<Void> updatePost(@Valid @RequestBody Post newPost, @PathVariable Long id) {
-        try {
-            newPost.setId(id);
-            postService.updatePost(newPost);
-            return ResponseEntity.noContent().build();
-        } catch(Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        newPost.setId(id);
+        postService.updatePost(newPost);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")

@@ -87,7 +87,7 @@ public class PostService {
             findPostById(id);
             postRepository.deleteById(id);
         } catch(Exception e){
-            throw new PostException("Post can't be deleted:" + e.getMessage());
+            throw new RuntimeException("Post can't be deleted:" + e.getMessage());
         }
        
     }

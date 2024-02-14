@@ -40,12 +40,8 @@ public class ProfileController {
     @GetMapping("/{id}")
     public ResponseEntity<Profile> findById(@PathVariable Long id){
         Profile found;
-        try {
-           found = profileService.findbyProfileId(id);
-            return ResponseEntity.ok(found);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        found = profileService.findbyProfileId(id);
+        return ResponseEntity.ok(found);
        
         // Significa que retorna um 200, um OK
     }
@@ -54,16 +50,12 @@ public class ProfileController {
     @Validated(CreateProfile.class) // Dizendo que está validado segundo o grupo CreateProfile
     // O Valid servirá para validar o Body que estará vindo, representando um objeto de Profile
     public ResponseEntity<Profile> createProfile(@Valid @RequestBody Profile profile) {
-        try{
-            profileService.createProfile(profile);
-            URI createdLoc = ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}").buildAndExpand(profile.getId()).toUri();
-            // O created é utilizado para descrever uma criação de recurso, direcionada a uma URI
-            return ResponseEntity.created(createdLoc).build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-               
+        profileService.createProfile(profile);
+        URI createdLoc = ServletUriComponentsBuilder.fromCurrentRequest()
+        .path("/{id}").buildAndExpand(profile.getId()).toUri();
+        // O created é utilizado para descrever uma criação de recurso, direcionada a uma URI
+        return ResponseEntity.created(createdLoc).build();
+            
     }
 
     @PutMapping("/{id}")
