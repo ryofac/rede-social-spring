@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.ryofac.livbook.livbook.DTOs.ProfileDTO;
 import com.ryofac.livbook.livbook.Models.Profile;
 import com.ryofac.livbook.livbook.Models.Profile.CreateProfile;
 import com.ryofac.livbook.livbook.Models.Profile.UpdateProfile;
@@ -25,7 +26,6 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/profile") // As rotas que começam com /profile vão ser tratadas por esse controller
 @Validated // Indica que será efetuada uma validação de dados
-// TODO : Adcionar e tratar mais tipos de Exceções:
 public class ProfileController {
     private ProfileService profileService;
 
@@ -38,9 +38,8 @@ public class ProfileController {
     // O id vem entre chaves porque ele será passado como parâmetro para a função
     // Também deve-se colocar como o PATHVARIABLE para indicar que ele é um parâmetro
     @GetMapping("/{id}")
-    public ResponseEntity<Profile> findById(@PathVariable Long id){
-        Profile found;
-        found = profileService.findbyProfileId(id);
+    public ResponseEntity<ProfileDTO> findById(@PathVariable Long id){
+        ProfileDTO found = profileService.findbyProfileDTOId(id);
         return ResponseEntity.ok(found);
        
         // Significa que retorna um 200, um OK

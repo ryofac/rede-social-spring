@@ -5,8 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class HashtagDTO {
+public class HashtagDetails {
     private Long id;
     private String title;
     private Integer timesUsed;
+    private PostMinimal posts;
 }

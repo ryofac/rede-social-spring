@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import com.ryofac.livbook.livbook.DTOs.HashtagDTO;
-import com.ryofac.livbook.livbook.DTOs.PostDTO;
+import com.ryofac.livbook.livbook.DTOs.HashtagDetails;
+import com.ryofac.livbook.livbook.DTOs.PostDetails;
 
 import com.ryofac.livbook.livbook.Models.Hashtag;
 import com.ryofac.livbook.livbook.Models.Post;
@@ -21,14 +21,10 @@ import com.ryofac.livbook.livbook.Utils.DTOMapper;
 
 import jakarta.transaction.Transactional;
 
-// TODO: Descobrir e tratar o porqueê quando o post tem hashtags não consegue serializar os dados para retornar na api
-
 @Service
 public class PostService {
     private IPostRepository postRepository;
     private IHashtagRepository hashtagRepository;
-
-    //TODO: Implementar HashtagService como uma extensão de postService, já que são um "casal"
 
     @Autowired
     public PostService(IPostRepository postRepository, IHashtagRepository hashtagRepository) {
@@ -43,8 +39,10 @@ public class PostService {
     // O método de criar post também lida bastante, por consequência, com a lógica de salvar hashtags:
     // Se o título da hashtag já estiver no banco de dados, ela não é salva novamente
     // Aqui também atualiza- se a quantidade de vezes que a hastag foi usada
+
+    
     // TODO: Criar funções auxiliares aqui
-    public PostDTO createPost(Post toBeSaved){
+    public PostDetails createPost(Post toBeSaved){
         toBeSaved.setId(null);
         if(!toBeSaved.getHashtags().isEmpty()){
             List<Hashtag> managedHashtags = new ArrayList<>();
@@ -60,16 +58,17 @@ public class PostService {
             }
             toBeSaved.setHashtags(managedHashtags);
         }
-        return DTOMapper.toPostDTO(postRepository.save(toBeSaved));
+        return DTOMapper.toPostDetails(postRepository.save(toBeSaved));
     }   
 
 
     @Transactional
-    public PostDTO updatePost(Post alteredPost) {
+    public PostDetails updatePost(Post alteredPost) {
         Post found = findPostById(alteredPost.getId());
         found.setText(alteredPost.getText());
         found.setHashtags(alteredPost.getHashtags());
-        return DTOMapper.toPostDTO(postRepository.save(found));
+        found.setComments(alteredPost.getComments());
+        return DTOMapper.toPostDetails(postRepository.save(found));
     }
 
     public Post findPostById(@NonNull Long id){
@@ -79,8 +78,8 @@ public class PostService {
         
     }
 
-    public PostDTO findPostDTObyid(@NonNull Long id){
-        return DTOMapper.toPostDTO(findPostById(id));
+    public PostDetails findPostDTObyid(@NonNull Long id){
+        return DTOMapper.toPostDetails(findPostById(id));
     }
 
     @Transactional
@@ -90,9 +89,15 @@ public class PostService {
     }
 
 
-    public List<PostDTO> findPostsByOwnerId(Long id){
+    public List<PostDetails> getAllPosts(){
+        List<PostDetails> posts = postRepository.findAll().stream().map(DTOMapper::toPostDetails).collect(Collectors.toList());
+        return posts;
+    }
+
+
+    public List<PostDetails> findPostsByOwnerId(Long id){
         List<Post> posts = postRepository.findByOwnerId(id);
-        List<PostDTO> convert = posts.stream().map(DTOMapper::toPostDTO).collect(Collectors.toList());
+        List<PostDetails> convert = posts.stream().map(DTOMapper::toPostDetails).collect(Collectors.toList());
         return convert;
     }
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.ryofac.livbook.livbook.DTOs.PostDTO;
+import com.ryofac.livbook.livbook.DTOs.PostDetails;
 import com.ryofac.livbook.livbook.Models.Post;
 import com.ryofac.livbook.livbook.Models.Post.CreatePost;
 import com.ryofac.livbook.livbook.Models.Post.UpdatePost;
@@ -36,15 +36,22 @@ public class PostController {
         this.postService = postService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<PostDetails>> getAllPosts(){
+        List<PostDetails> posts = postService.getAllPosts();
+        return ResponseEntity.ok(posts);
+
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<PostDTO> findPostById(@PathVariable Long id){
-        PostDTO found = postService.findPostDTObyid(id);
+    public ResponseEntity<PostDetails> findPostById(@PathVariable Long id){
+        PostDetails found = postService.findPostDTObyid(id);
         return ResponseEntity.ok(found);
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<List<PostDTO>> findByOwnerId(@PathVariable Long id) {
-        List<PostDTO> allPosts = postService.findPostsByOwnerId(id);
+    public ResponseEntity<List<PostDetails>> findByOwnerId(@PathVariable Long id) {
+        List<PostDetails> allPosts = postService.findPostsByOwnerId(id);
         return ResponseEntity.ok(allPosts);
     }
 

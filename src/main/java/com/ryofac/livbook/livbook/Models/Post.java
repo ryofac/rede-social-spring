@@ -72,8 +72,7 @@ public class Post {
     @JoinColumn(name = "ownerId", updatable = false, unique = false, nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     // Devo dizer que esse é o tipo específico de coluna que referencia dados de outra tabela
-
-    @JsonIgnore
+    
     private Profile owner;
 
     @PreRemove
