@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,7 +35,7 @@ public class Comment {
 
     @NotEmpty(groups = {CreateComment.class})
     @NotNull
-    @Length(max = 100)
+    @Length(min=10, max = 100)
     private String content;
 
     @ManyToOne

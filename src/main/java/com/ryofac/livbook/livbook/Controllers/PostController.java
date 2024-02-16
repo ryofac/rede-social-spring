@@ -2,9 +2,11 @@ package com.ryofac.livbook.livbook.Controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import com.ryofac.livbook.livbook.Models.Post;
 import com.ryofac.livbook.livbook.Models.Post.CreatePost;
 import com.ryofac.livbook.livbook.Models.Post.UpdatePost;
 import com.ryofac.livbook.livbook.Services.PostService;
+import com.ryofac.livbook.livbook.Utils.DTOMapper;
 
 import jakarta.validation.Valid;
 
@@ -38,21 +41,23 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<List<PostDetails>> getAllPosts(){
-        List<PostDetails> posts = postService.getAllPosts();
-        return ResponseEntity.ok(posts);
+        List<Post> posts = postService.getAllPosts();
+        List<PostDetails> converted = posts.stream().map(DTOMapper::toPostDetails).collect(Collectors.toList());
+        return ResponseEntity.ok(converted);
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostDetails> findPostById(@PathVariable Long id){
-        PostDetails found = postService.findPostDTObyid(id);
-        return ResponseEntity.ok(found);
+    public ResponseEntity<PostDetails> findPostById(@PathVariable @NonNull Long id){
+        Post found = postService.findPostById(id);
+        PostDetails converted = DTOMapper.toPostDetails(found);
+        return ResponseEntity.ok(converted);
     }
 
     @GetMapping("/user/{id}")
     public ResponseEntity<List<PostDetails>> findByOwnerId(@PathVariable Long id) {
-        List<PostDetails> allPosts = postService.findPostsByOwnerId(id);
-        return ResponseEntity.ok(allPosts);
+        List<Post> allPosts = postService.findPostsByOwnerId(id);
+        return ResponseEntity.ok(allPosts.stream().map(DTOMapper::toPostDetails).collect(Collectors.toList()));
     }
 
     // Create

@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.ryofac.livbook.livbook.DTOs.ProfileDTO;
+import com.ryofac.livbook.livbook.DTOs.ProfileDetails;
 import com.ryofac.livbook.livbook.Models.Profile;
 import com.ryofac.livbook.livbook.Models.Profile.CreateProfile;
 import com.ryofac.livbook.livbook.Models.Profile.UpdateProfile;
 import com.ryofac.livbook.livbook.Services.ProfileService;
+import com.ryofac.livbook.livbook.Utils.DTOMapper;
 
 import jakarta.validation.Valid;
 
@@ -38,9 +39,10 @@ public class ProfileController {
     // O id vem entre chaves porque ele será passado como parâmetro para a função
     // Também deve-se colocar como o PATHVARIABLE para indicar que ele é um parâmetro
     @GetMapping("/{id}")
-    public ResponseEntity<ProfileDTO> findById(@PathVariable Long id){
-        ProfileDTO found = profileService.findbyProfileDTOId(id);
-        return ResponseEntity.ok(found);
+    public ResponseEntity<ProfileDetails> findById(@PathVariable Long id){
+        Profile found = profileService.findbyProfileId(id);
+        ProfileDetails converted = DTOMapper.toProfileDetails(found);
+        return ResponseEntity.ok(converted);
        
         // Significa que retorna um 200, um OK
     }

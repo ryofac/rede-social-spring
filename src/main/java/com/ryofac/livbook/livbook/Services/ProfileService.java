@@ -1,20 +1,17 @@
 package com.ryofac.livbook.livbook.Services;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import com.ryofac.livbook.livbook.DTOs.ProfileDTO;
+
 import com.ryofac.livbook.livbook.Models.Profile;
 import com.ryofac.livbook.livbook.Repositories.IPostRepository;
 import com.ryofac.livbook.livbook.Repositories.IProfileRepository;
 import com.ryofac.livbook.livbook.Services.exceptions.ObjectNotFoundException;
-import com.ryofac.livbook.livbook.Utils.DTOMapper;
-
 import jakarta.transaction.Transactional;
 
 @Service
@@ -29,17 +26,17 @@ public class ProfileService {
     }
 
     @Transactional
-    public ProfileDTO createProfile(Profile profile) {
+    public Profile createProfile(Profile profile) {
         profile.setId(null);
         postRepository.saveAll(profile.getPosts());
-        return DTOMapper.toProfileDTO(profileRepository.save(profile));
+        return profileRepository.save(profile);
     }
 
-    public ProfileDTO updateProfile(Profile alteredProfile) {
+    public Profile updateProfile(Profile alteredProfile) {
         Profile found = findbyProfileId(alteredProfile.getId());
         found.setProfilePhotoUrl(alteredProfile.getProfilePhotoUrl());
         found.setPassword(alteredProfile.getPassword());
-        return DTOMapper.toProfileDTO(profileRepository.save(found));
+        return profileRepository.save(found);
     }
 
     // A exceção Exception é capturada porque ela pode ser gerada pelo fato do usuário estar relacionado com vários posts
@@ -49,8 +46,8 @@ public class ProfileService {
         profileRepository.deleteById(found.getId());
     }
 
-    public List<ProfileDTO> getAllProfiles() {
-        List<ProfileDTO> profiles = profileRepository.findAll().stream().map(DTOMapper::toProfileDTO).collect(Collectors.toList());
+    public List<Profile> getAllProfiles() {
+        List<Profile> profiles = profileRepository.findAll();
         return profiles;
     
     }
@@ -60,8 +57,8 @@ public class ProfileService {
         return found;
     }
 
-    public ProfileDTO findbyProfileDTOId(Long id){
-        return DTOMapper.toProfileDTO(findbyProfileId(id));
+    public Profile findbyProfileDTOId(Long id){
+        return findbyProfileId(id);
     }
 
 

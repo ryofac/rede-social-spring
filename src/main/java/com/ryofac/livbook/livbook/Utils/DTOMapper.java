@@ -7,7 +7,8 @@ import com.ryofac.livbook.livbook.DTOs.HashtagDetails;
 import com.ryofac.livbook.livbook.DTOs.HashtagMinimal;
 import com.ryofac.livbook.livbook.DTOs.PostDetails;
 import com.ryofac.livbook.livbook.DTOs.PostMinimal;
-import com.ryofac.livbook.livbook.DTOs.ProfileDTO;
+import com.ryofac.livbook.livbook.DTOs.ProfileDetails;
+import com.ryofac.livbook.livbook.DTOs.ProfileMinimal;
 import com.ryofac.livbook.livbook.Models.Comment;
 import com.ryofac.livbook.livbook.Models.Hashtag;
 import com.ryofac.livbook.livbook.Models.Post;
@@ -29,7 +30,7 @@ public class DTOMapper {
                       .id(post.getId())
                       .createdAt(post.getCreatedAt())
                       .editedAt(post.getEditedAt())
-                      .owner(toProfileDTO(post.getOwner()))
+                      .owner(toProfileMinimal(post.getOwner()))
                       .text(post.getText())
                       .photoAttachementURL(post.getPhotoAttachementURL())
                       .hashtags(post.getHashtags().stream().map(DTOMapper::toHashtagMinimal).collect(Collectors.toList()))
@@ -85,18 +86,35 @@ public class DTOMapper {
     }
     
     /**
-     * Converte Entidades Profile em ProfileDTO
+     * Converte Entidades Profile em ProfileDetails DTO
      * 
      * @param prof uma instância da entidade Profile
      * @return um Objeto de transferência de Profile
      */
-    static public ProfileDTO toProfileDTO(Profile prof){
-        return ProfileDTO.builder()
+    static public ProfileDetails toProfileDetails(Profile prof){
+        return ProfileDetails.builder()
                         .id(prof.getId())
                         .email(prof.getEmail())
                         .username(prof.getUsername()) 
                         .profilePhotoUrl(prof.getProfilePhotoUrl())
                         .posts(prof.getPosts().stream().map(DTOMapper::toPostMinimal).collect(Collectors.toList()))
+                        .comments(prof.getComments().stream().map(DTOMapper::toCommentDTO).collect(Collectors.toList()))
+                        .build();
+    }
+
+
+     /**
+     * Converte Entidades Profile em ProfileMinimal DTO
+     * 
+     * @param prof uma instância da entidade Profile
+     * @return um Objeto de transferência de Profile
+     */
+    static public ProfileMinimal toProfileMinimal(Profile prof){
+        return ProfileMinimal.builder()
+                        .id(prof.getId())
+                        .email(prof.getEmail())
+                        .username(prof.getUsername()) 
+                        .profilePhotoUrl(prof.getProfilePhotoUrl())
                         .build();
     }
 
@@ -109,7 +127,7 @@ public class DTOMapper {
      */
     static public CommentDTO toCommentDTO(Comment comment){
         return CommentDTO.builder()
-                         .owner(toProfileDTO(comment.getOwner()))
+                         .owner(toProfileMinimal(comment.getOwner()))
                          .content(comment.getContent())
                          .build();
     }

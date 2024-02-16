@@ -7,5 +7,5 @@ import lombok.Data;
 @Data
 public class CommentDTO {
     private String content;
-    private ProfileDTO owner;
+    private ProfileMinimal owner;
 }
