@@ -14,7 +14,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +33,7 @@ public class Hashtag {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    @Length(min=4, max=20)
+    @Length(min = 4, max = 20)
     private String title;
     private Integer timesUsed;
 
@@ -45,5 +44,5 @@ public class Hashtag {
     @Builder.Default
     @JsonIgnore
     private List<Post> posts = new ArrayList<>();
-   
+
 }

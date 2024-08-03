@@ -29,7 +29,7 @@ import jakarta.validation.Valid;
 
 // TODO : Adcionar e tratar mais tipos de Exceções
 
-@RequestMapping("/posts")
+@RequestMapping("/api/posts")
 @RestController
 public class PostController {
     private PostService postService;
@@ -40,7 +40,7 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostDetails>> getAllPosts(){
+    public ResponseEntity<List<PostDetails>> getAllPosts() {
         List<Post> posts = postService.getAllPosts();
         List<PostDetails> converted = posts.stream().map(DTOMapper::toPostDetails).collect(Collectors.toList());
         return ResponseEntity.ok(converted);
@@ -48,7 +48,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostDetails> findPostById(@PathVariable @NonNull Long id){
+    public ResponseEntity<PostDetails> findPostById(@PathVariable @NonNull Long id) {
         Post found = postService.findPostById(id);
         PostDetails converted = DTOMapper.toPostDetails(found);
         return ResponseEntity.ok(converted);
@@ -63,9 +63,10 @@ public class PostController {
     // Create
     @PostMapping
     @Validated(CreatePost.class)
-    public ResponseEntity<Void> createPost(@Valid @RequestBody Post toBeCreated){
+    public ResponseEntity<Void> createPost(@Valid @RequestBody Post toBeCreated) {
         postService.createPost(toBeCreated);
-        URI postLoc = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(toBeCreated.getId()).toUri();
+        URI postLoc = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(toBeCreated.getId())
+                .toUri();
         return ResponseEntity.created(postLoc).build();
     }
 
@@ -78,12 +79,9 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long id){
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.deletePost(id);
         return ResponseEntity.noContent().build();
     }
 
-
-
-    
 }
