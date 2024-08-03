@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         registry.addMapping("/**") // Indicando que qualquer origem pode acessar a API
-        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS"); // Indicando os métodos que podem ser utilizados
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS"); // Indicando os métodos que podem ser
+                                                                            // utilizados
     }
-    
 }

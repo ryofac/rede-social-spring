@@ -25,7 +25,7 @@ import com.ryofac.livbook.livbook.Utils.DTOMapper;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/profile") // As rotas que começam com /profile vão ser tratadas por esse controller
+@RequestMapping("/api/profile") // As rotas que começam com /profile vão ser tratadas por esse controller
 @Validated // Indica que será efetuada uma validação de dados
 public class ProfileController {
     private ProfileService profileService;
@@ -34,29 +34,32 @@ public class ProfileController {
     public ProfileController(ProfileService profileService) {
         this.profileService = profileService;
     }
-    
+
     // O get mapping deixa claro que é uma requisição do tipo GET
     // O id vem entre chaves porque ele será passado como parâmetro para a função
-    // Também deve-se colocar como o PATHVARIABLE para indicar que ele é um parâmetro
+    // Também deve-se colocar como o PATHVARIABLE para indicar que ele é um
+    // parâmetro
     @GetMapping("/{id}")
-    public ResponseEntity<ProfileDetails> findById(@PathVariable Long id){
+    public ResponseEntity<ProfileDetails> findById(@PathVariable Long id) {
         Profile found = profileService.findbyProfileId(id);
         ProfileDetails converted = DTOMapper.toProfileDetails(found);
         return ResponseEntity.ok(converted);
-       
+
         // Significa que retorna um 200, um OK
     }
 
     @PostMapping
     @Validated(CreateProfile.class) // Dizendo que está validado segundo o grupo CreateProfile
-    // O Valid servirá para validar o Body que estará vindo, representando um objeto de Profile
+    // O Valid servirá para validar o Body que estará vindo, representando um objeto
+    // de Profile
     public ResponseEntity<Profile> createProfile(@Valid @RequestBody Profile profile) {
         profileService.createProfile(profile);
         URI createdLoc = ServletUriComponentsBuilder.fromCurrentRequest()
-        .path("/{id}").buildAndExpand(profile.getId()).toUri();
-        // O created é utilizado para descrever uma criação de recurso, direcionada a uma URI
+                .path("/{id}").buildAndExpand(profile.getId()).toUri();
+        // O created é utilizado para descrever uma criação de recurso, direcionada a
+        // uma URI
         return ResponseEntity.created(createdLoc).build();
-            
+
     }
 
     @PutMapping("/{id}")
@@ -73,7 +76,4 @@ public class ProfileController {
         return ResponseEntity.noContent().build();
     }
 
-
-
-    
 }

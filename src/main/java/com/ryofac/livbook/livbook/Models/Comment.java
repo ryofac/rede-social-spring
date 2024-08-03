@@ -1,11 +1,9 @@
 package com.ryofac.livbook.livbook.Models;
 
-
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,13 +31,13 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(groups = {CreateComment.class})
+    @NotEmpty(groups = { CreateComment.class })
     @NotNull
-    @Length(min=10, max = 100)
+    @Length(min = 10, max = 100)
     private String content;
 
     @ManyToOne
-    @NotEmpty(groups = {CreateComment.class})
+    @NotEmpty(groups = { CreateComment.class })
     @NotNull
     private Profile owner;
 

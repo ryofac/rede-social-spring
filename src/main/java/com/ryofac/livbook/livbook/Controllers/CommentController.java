@@ -21,7 +21,7 @@ import com.ryofac.livbook.livbook.Services.CommentService;
 import com.ryofac.livbook.livbook.Utils.DTOMapper;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/api/comments")
 public class CommentController {
 
     @Autowired
@@ -34,7 +34,6 @@ public class CommentController {
         return ResponseEntity.ok().body(converted);
     }
 
-    
     @GetMapping("/profile/{id}")
     public ResponseEntity<List<CommentDTO>> findCommentsByOwnerId(@PathVariable Long id) {
         List<Comment> found = commentService.findCommentsByOwnerId(id);
@@ -43,18 +42,20 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createComment(@RequestBody Comment toBeCreated){
+    public ResponseEntity<Void> createComment(@RequestBody Comment toBeCreated) {
         toBeCreated.setId(null);
         commentService.createComment(toBeCreated);
-        URI commentLoc = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(toBeCreated.getId()).toUri();
+        URI commentLoc = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(toBeCreated.getId()).toUri();
         return ResponseEntity.created(commentLoc).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteComment(@RequestBody Comment toBeDeleted){
+    public ResponseEntity<Void> deleteComment(@RequestBody Comment toBeDeleted) {
         commentService.deleteComment(toBeDeleted);
-        URI commentLoc = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(toBeDeleted.getId()).toUri();
+        URI commentLoc = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(toBeDeleted.getId()).toUri();
         return ResponseEntity.created(commentLoc).build();
     }
-    
+
 }
